@@ -6,7 +6,7 @@ set -e
 # '# CONFIG_FOO is not set' remains, it can override an earlier CONFIG_FOO=y.
 # Remove every existing occurrence first, then append one authoritative value.
 
-DEVICE="${1:-lmi}"
+DEVICE="${1:-umi}"
 CONFIG_FILE="arch/arm64/configs/${DEVICE}_defconfig"
 
 if [ ! -f "${CONFIG_FILE}" ]; then
