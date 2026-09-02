@@ -6,7 +6,7 @@ name: Build Kernel
       device:
         description: 'Target Device Code (设备代号)'
         required: true
-        default: 'lmi'
+        default: 'umi'
         type: choice
         options:
           - alioth
@@ -50,10 +50,10 @@ jobs:
       with:
         fetch-depth: 1
     - name: Normalize DroidSpaces kernel configuration
-      if: ${{ inputs.device == 'lmi' }}
+      if: ${{ inputs.device == 'umi' }}
       run: |
         chmod +x scripts/prepare_droidspaces_config.sh
-        ./scripts/prepare_droidspaces_config.sh lmi
+        ./scripts/prepare_droidspaces_config.sh umi
     - name: Set up Environment
       run: |
         sudo apt-get update
@@ -120,7 +120,7 @@ jobs:
         echo "Executing command: ./build_kernel.sh $ARGS"
         ./build_kernel.sh $ARGS
     - name: Verify generated DroidSpaces kernel configuration
-      if: ${{ inputs.device == 'lmi' }}
+      if: ${{ inputs.device == 'umi' }}
       run: |
         set -e
         found=0
