@@ -6,7 +6,7 @@ on:
       device:
         description: Target Device Code (设备代号)
         required: true
-        default: lmi
+        default: umi
         type: choice
         options:
           - alioth
@@ -49,10 +49,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Normalize DroidSpaces kernel configuration
-        if: ${{ inputs.device == 'lmi' }}
+        if: ${{ inputs.device == 'umi' }}
         run: |
           chmod +x scripts/prepare_droidspaces_config.sh
-          ./scripts/prepare_droidspaces_config.sh lmi
+          ./scripts/prepare_droidspaces_config.sh umi
 
       - name: Set up Environment
         run: |
@@ -79,8 +79,8 @@ jobs:
           sed -i 's#curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/main/kernel/setup.sh" | bash#curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/main/kernel/setup.sh" | bash -s -- b2ac2fc8703ce9f5226e2a38a59f8b72f8a3005c#' build_kernel.sh
           grep -F 'bash -s -- b2ac2fc8703ce9f5226e2a38a59f8b72f8a3005c' build_kernel.sh
 
-      - name: Disable ccache for LMI DroidSpaces validation
-        if: ${{ inputs.device == 'lmi' }}
+      - name: Disable ccache for UMI DroidSpaces validation
+        if: ${{ inputs.device == 'umi' }}
         run: |
           set -e
           echo "CCACHE_DISABLE=1" >> "$GITHUB_ENV"
@@ -97,7 +97,7 @@ jobs:
           ./build_kernel.sh $args
 
       - name: Verify generated DroidSpaces kernel configuration
-        if: ${{ inputs.device == 'lmi' }}
+        if: ${{ inputs.device == 'umi' }}
         run: |
           set -e
           found=0
